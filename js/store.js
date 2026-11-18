@@ -38,7 +38,12 @@ const Store = (() => {
     uid,
     caves: () => get('caves', DEFAULT_CAVES),
     saveCaves: (c) => set('caves', c),
-    profil: () => get('profil', {}),
+    profil: () => {
+      const p = get('profil', {});
+      // Ancien format (un seul proche) -> liste de proches
+      if (!p.proches) p.proches = p.procheTel ? [{ nom: p.procheNom || '', tel: p.procheTel }] : [];
+      return p;
+    },
     saveProfil: (p) => set('profil', p),
     sorties: () => get('sorties', []),
     saveSorties: (s) => set('sorties', s),

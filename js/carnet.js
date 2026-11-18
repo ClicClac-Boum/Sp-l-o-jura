@@ -41,6 +41,7 @@ const Carnet = (() => {
         <h3>${esc(s.caveNom || 'Cavité')}</h3>
         <div class="meta">📅 ${s.date ? fmtDate(s.date) : '—'} · ⏱ ${fmtDuree(s.dureeMin)}</div>
         ${s.equipe ? `<div class="meta">👥 ${esc(s.equipe)}</div>` : ''}
+        ${s.etapes?.length ? `<ol class="timeline">${s.etapes.map((e) => `<li><span class="t">${fmtHeure(e.t)}</span> ${esc(e.txt)}</li>`).join('')}</ol>` : ''}
         ${s.notes ? `<p style="margin:.5rem 0 0;white-space:pre-wrap">${esc(s.notes)}</p>` : ''}
         ${s.photos?.length ? `<div class="photos">${s.photos.map((p) => `<img src="${p}" alt="Photo de sortie" loading="lazy" data-zoom>`).join('')}</div>` : ''}
         ${s.videos?.length ? `<div class="links">${s.videos.map((v) => `<a href="${esc(v)}" target="_blank" rel="noopener">🎬 ${esc(v)}</a>`).join('')}</div>` : ''}
@@ -124,5 +125,5 @@ const Carnet = (() => {
     });
   }
 
-  return { render, nouvelle: formulaire };
+  return { render, nouvelle: formulaire, reduirePhoto };
 })();
