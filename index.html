@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f2a2e">
+  <title>Spéléo Jura</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Bandeau d'alerte en cours -->
+  <div id="alert-banner" class="alert-banner hidden"></div>
+
+  <!-- ===== Vue Carte ===== -->
+  <section id="view-map" class="view active">
+    <div id="map"></div>
+    <div class="map-controls">
+      <button id="btn-layers" class="round-btn" title="Fonds de carte">🗺️</button>
+      <button id="btn-add-cave" class="round-btn" title="Ajouter une cavité">＋</button>
+      <button id="btn-locate" class="round-btn" title="Ma position">◎</button>
+    </div>
+    <div id="layers-panel" class="panel hidden">
+      <h3>Fond de carte</h3>
+      <label><input type="radio" name="base" value="carte" checked> Carte nationale swisstopo</label>
+      <label><input type="radio" name="base" value="ortho"> Photo aérienne (SWISSIMAGE)</label>
+      <h3>Superpositions</h3>
+      <label><input type="checkbox" id="ov-relief" checked> Relief ombré (swissALTI3D)</label>
+      <label><input type="checkbox" id="ov-ruissellement"> Zones d'inondation par ruissellement (OFEV)</label>
+      <label><input type="checkbox" id="ov-pente"> Pentes &gt; 30°</label>
+    </div>
+    <div id="add-hint" class="hint hidden">Touchez la carte à l'emplacement de l'entrée</div>
+  </section>
+
+  <!-- ===== Fiche cavité (panneau du bas) ===== -->
+  <div id="sheet" class="sheet hidden">
+    <button class="sheet-close" data-close-sheet>✕</button>
+    <div id="sheet-content"></div>
+  </div>
+
+  <!-- ===== Vue Carnet ===== -->
+  <section id="view-carnet" class="view">
+    <header class="view-header">
+      <h1>Carnet de sorties</h1>
+      <button id="btn-new-sortie" class="btn primary">＋ Nouvelle sortie</button>
+    </header>
+    <div id="carnet-stats" class="stats"></div>
+    <div id="carnet-list"></div>
+  </section>
+
+  <!-- ===== Vue Profil ===== -->
+  <section id="view-profil" class="view">
+    <header class="view-header"><h1>Profil</h1></header>
+    <form id="profil-form" class="card form">
+      <label>Ton nom<input name="nom" required placeholder="Prénom Nom"></label>
+      <h3>Contact d'urgence</h3>
+      <p class="muted">C'est cette personne qui recevra les infos de ta sortie (cavité, coordonnées GPS de l'entrée, heure de retour) et qui doit appeler les secours si tu n'es pas ressorti.</p>
+      <label>Nom du proche<input name="procheNom" required placeholder="ex. Maman"></label>
+      <label>Téléphone du proche<input name="procheTel" type="tel" required placeholder="+41 79 123 45 67"></label>
+      <button class="btn primary" type="submit">Enregistrer</button>
+      <p id="profil-saved" class="muted hidden">✓ Enregistré</p>
+    </form>
+    <div class="card">
+      <h3>Numéros de secours</h3>
+      <p><a class="btn" href="tel:112">📞 112 (urgence européenne)</a></p>
+      <p><a class="btn" href="tel:1414">🚁 1414 (Rega, Suisse)</a></p>
+      <p class="muted">Spéléo-Secours Suisse est déclenché via la Rega (1414). En France, le Spéléo Secours Français est déclenché via le 112.</p>
+    </div>
+  </section>
+
+  <!-- ===== Navigation ===== -->
+  <nav class="tabbar">
+    <button data-view="map" class="active">🗺️<span>Carte</span></button>
+    <button data-view="carnet">📓<span>Carnet</span></button>
+    <button data-view="profil">👤<span>Profil</span></button>
+  </nav>
+
+  <!-- ===== Modale générique ===== -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <button class="sheet-close" data-close-modal>✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/meteo.js"></script>
+  <script src="js/alerte.js"></script>
+  <script src="js/carnet.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
